@@ -1,0 +1,56 @@
+<div fxLayout="column">
+  <div>
+    <h1>Buscador de Héroes</h1>
+    <mat-divider></mat-divider>
+  </div>
+  <div fxLayout="column">
+    <h3>Buscador</h3>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>SuperHéroe</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="SuperHéroe"
+             matInput
+             [(ngModel)]="termino"
+             [matAutocomplete]="auto"
+             (input)="buscando()">
+
+<!-- TODO: esta parte comentada es otra forma de hacerloque se me ha ocurrido primeramente la otra es la del curso-->
+<!--       <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="opcionSeleccionada( $event )">
+        <div *ngIf="heroes.length === 0; else NoHayNada">
+          <mat-option value="">
+            <h4>No se encontró el término {{ termino }}</h4>
+          </mat-option>
+        </div>
+        <ng-template #NoHayNada>
+          <mat-option *ngFor="let heroe of heroes" [value]="heroe">
+            {{heroe.superhero}}
+          </mat-option>
+        </ng-template>
+      </mat-autocomplete> -->
+
+      <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      (optionSelected)="opcionSeleccionada( $event )">
+
+      <mat-option *ngFor="let heroe of heroes" [value]="heroe">
+        {{heroe.superhero}}
+      </mat-option>
+
+      <mat-option value="" *ngIf="heroes.length === 0 && termino.trim().length > 0">
+        No se encontró el término {{ termino }}
+      </mat-option>
+
+    </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <pre>{{ heroeSeleccionado | json }}</pre>
+  </div>
+</div>
